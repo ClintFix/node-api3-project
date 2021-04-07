@@ -41,16 +41,47 @@ router.put('/:id', validateUserId, validateUser, (req, res) => {
   // RETURN THE FRESHLY UPDATED USER OBJECT
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
+  const {id} = req.params;
+  Users.update(id, req.body)
+    .then(() => {
+      Users.getById(id)
+       .then(updatedUser => {
+         res.status(200).json(updatedUser)
+       })
+      .catch(err => {
+        res.status(500).json(err.message)
+      })
+    })
+    .catch(err => {
+      res.status(500).json(err.message)
+    })
 });
 
 router.delete('/:id', validateUserId, (req, res) => {
   // RETURN THE FRESHLY DELETED USER OBJECT
   // this needs a middleware to verify user id
+  const {id} = req.params;
+  Users.remove(id)
+    .then(() => {
+      res.status(200).json(req.user)
+    })
+    .catch(err => {
+      res.status(500).json(err.message)
+    })
 });
 
 router.get('/:id/posts', validateUserId, (req, res) => {
   // RETURN THE ARRAY OF USER POSTS
   // this needs a middleware to verify user id
+  const {id} = req.params;
+  Users.getUserPosts(id)
+    .then(posts => {
+      res.status(200).json(posts)
+    })
+    .catch(err => {
+      res.status(500).json(err.message)
+    })
+
 });
 
 router.post('/:id/posts', validateUserId, (req, res) => {
