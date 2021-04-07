@@ -24,7 +24,9 @@ function validateUserId(req, res, next) {
 }
 
 function validateUser(req, res, next) {
-  // DO YOUR MAGIC
+  if (!req.body.name) {
+    res.status(400).json({message: "missing required name field"})
+  }
 }
 
 function validatePost(req, res, next) {
