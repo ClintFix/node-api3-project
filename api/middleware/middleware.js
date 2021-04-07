@@ -10,7 +10,7 @@ function validateUserId(req, res, next) {
   Users.getById(id)
     .then(user => {
       if(!user) {
-        res.status(404).json(`No user with ID: ${id}`)
+        res.status(404).json({ message: "user not found" })
       }
       else {
         req.user = user //to access user with id without needing another query
@@ -26,6 +26,8 @@ function validateUserId(req, res, next) {
 function validateUser(req, res, next) {
   if (!req.body.name) {
     res.status(400).json({message: "missing required name field"})
+  } else {
+    next();
   }
 }
 
