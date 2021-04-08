@@ -13,7 +13,7 @@ server.use(logger)
 // Connect userRouter:
 server.use('/api/users', usersRouter)
 
-server.get('/', (req, res) => {
+server.get('/', (_, res) => {
   res.send(`<h2>Clint's Heroku Server!</h2>`);
 });
 
